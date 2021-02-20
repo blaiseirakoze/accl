@@ -15,7 +15,7 @@ public class Role {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	private String name;
-	private Date createOn;
+	private Date createOn = new Date();
 	
 	@OneToMany(mappedBy = "role")
     private List<Users> user;
