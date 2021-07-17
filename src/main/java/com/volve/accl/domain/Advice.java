@@ -18,7 +18,7 @@ public class Advice {
 	
 	@ManyToOne
     @JoinColumn(name = "attorney")
-    private Attorney attorney;
+    private Users attorney;
 
 	public String getId() {
 		return id;
@@ -52,11 +52,11 @@ public class Advice {
 		this.createOn = createOn;
 	}
 
-	public Attorney getAttorney() {
+	public Users getAttorney() {
 		return attorney;
 	}
 
-	public void setAttorney(Attorney attorney) {
+	public void setAttorney(Users attorney) {
 		this.attorney = attorney;
 	}
 
@@ -65,6 +65,5 @@ public class Advice {
 		return "Advice [id=" + id + ", advice=" + advice + ", attorneyId=" + attorneyId + ", createOn=" + createOn
 				+ ", attorney=" + attorney + "]";
 	}
-	
 	
 }

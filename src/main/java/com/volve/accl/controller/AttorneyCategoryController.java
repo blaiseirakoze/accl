@@ -12,30 +12,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.volve.accl.domain.Role;
+import com.volve.accl.domain.AttorneyCategory;
 import com.volve.accl.exception.HandlerInternalServerErrorException;
-import com.volve.accl.service.RoleService;
+import com.volve.accl.service.AttorneyCategoryService;
 
 
 @RestController
 @RequestMapping("/api")
-public class RoleController {
+public class AttorneyCategoryController {
 
 	@Autowired
-	private RoleService roleService;
+	private AttorneyCategoryService attorneyCategoryService;
 
 	/**
 	 * 
-	 * @param role
+	 * @param AttorneyCategory
 	 * @param request
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/role", method = RequestMethod.POST)
-	public ResponseEntity<?> createRole(@RequestBody Role role, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/attorneyCategory", method = RequestMethod.POST)
+	public ResponseEntity<?> createAttorneyCategory(@RequestBody AttorneyCategory AttorneyCategory,
+			HttpServletRequest request) throws Exception {
 		try {
-			Role rolee = roleService.createRole(role, request);
-			return new ResponseEntity<Role>(rolee, HttpStatus.OK);
+			AttorneyCategory attorneyCategorye = attorneyCategoryService.createAttorneyCategory(AttorneyCategory,
+					request);
+			return new ResponseEntity<AttorneyCategory>(attorneyCategorye, HttpStatus.CREATED);
 		} catch (Exception e) {
 			throw new Exception("Invalid credentials", e);
 		}
@@ -45,10 +47,10 @@ public class RoleController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/role", method = RequestMethod.GET)
-	public ResponseEntity<?> listRole(){
+	@RequestMapping(value = "/attorneyCategory", method = RequestMethod.GET)
+	public ResponseEntity<?> listAttorneyCategory(){
 		try {
-			return new ResponseEntity<List<Role>>(roleService.listRole(), HttpStatus.OK);
+			return new ResponseEntity<List<AttorneyCategory>>(attorneyCategoryService.listAttorneyCategory(), HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new HandlerInternalServerErrorException("Server error");
