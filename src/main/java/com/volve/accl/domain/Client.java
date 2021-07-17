@@ -19,7 +19,7 @@ public class Client {
 	private String address;
 	private String phoneNumber;
 	private Date dob;
-	private Date createOn;
+	private Date createOn= new Date();
 	
 	@OneToOne
     @JoinColumn(name = "Users")

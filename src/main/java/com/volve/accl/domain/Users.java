@@ -9,15 +9,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Users {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	private String username;
 	private String password;
-	private String roleId;
-	private String userId;
-	private Date createOn;
+	private Boolean active;
+	private Date createOn = new Date();
 	
 	@OneToOne(mappedBy = "users")
     private Client client;
@@ -27,6 +28,7 @@ public class Users {
 
 	@ManyToOne
     @JoinColumn(name = "role")
+	@JsonIgnore
     private Role role;
 
 	public String getId() {
@@ -51,22 +53,6 @@ public class Users {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public Date getCreateOn() {
@@ -101,12 +87,19 @@ public class Users {
 		this.role = role;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", roleId=" + roleId
-				+ ", userId=" + userId + ", createOn=" + createOn + ", client=" + client + ", attorney=" + attorney
+		return "Users [id=" + id + ", username=" + username + ", password=" + password
+				+ ", active=" + active + ", createOn=" + createOn + ", client=" + client + ", attorney=" + attorney
 				+ ", role=" + role + "]";
 	}
-	
 	
 }
