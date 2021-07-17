@@ -8,15 +8,31 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class AttorneyCategory {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	private String name;
-	private Date createOn;
+	private Date createOn = new Date();
 	
 	@OneToMany(mappedBy = "attorneyCategory")
-    private List<Attorney> attorney;
+	@JsonIgnore
+    private List<Users> attorneys;
+	
+	public AttorneyCategory(String id, String name, Date createOn) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.createOn = createOn;
+	}
+
+	public AttorneyCategory() {
+		super();
+	}
+
+
 
 	public String getId() {
 		return id;
@@ -42,19 +58,18 @@ public class AttorneyCategory {
 		this.createOn = createOn;
 	}
 
-	public List<Attorney> getAttorney() {
-		return attorney;
+	public List<Users> getAttorneys() {
+		return attorneys;
 	}
 
-	public void setAttorney(List<Attorney> attorney) {
-		this.attorney = attorney;
+	public void setAttorneys(List<Users> attorneys) {
+		this.attorneys = attorneys;
 	}
 
 	@Override
 	public String toString() {
-		return "AttorneyCategory [id=" + id + ", name=" + name + ", createOn=" + createOn + ", attorney=" + attorney
+		return "AttorneyCategory [id=" + id + ", name=" + name + ", createOn=" + createOn + ", attorneys=" + attorneys
 				+ "]";
 	}
-	
-	
+
 }

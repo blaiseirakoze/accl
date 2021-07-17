@@ -14,8 +14,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = { HandlerConflictException.class })
     protected ResponseEntity<Object> handleApiRequestException(HandlerConflictException e) {
         ApiException apiException = new ApiException();
-        apiException.setError(e.getMessage());
-        apiException.setHttpStatus(HttpStatus.CONFLICT.toString());
+        apiException.setStatusMessage(e.getMessage());
+        apiException.setStatusCode(HttpStatus.CONFLICT.toString());
         apiException.setZoneDateTime(ZonedDateTime.now(ZoneId.of("Z")).toString());
 
         return new ResponseEntity<>(apiException, HttpStatus.CONFLICT);
@@ -24,8 +24,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = { HandlerNotFoundException.class })
     protected ResponseEntity<Object> handleApiRequestException(HandlerNotFoundException e) {
         ApiException apiException = new ApiException();
-        apiException.setError(e.getMessage());
-        apiException.setHttpStatus(HttpStatus.NOT_FOUND.toString());
+        apiException.setStatusMessage(e.getMessage());
+        apiException.setStatusCode(HttpStatus.NOT_FOUND.toString());
         apiException.setZoneDateTime(ZonedDateTime.now(ZoneId.of("Z")).toString());
 
         return new ResponseEntity<>(apiException, HttpStatus.NOT_FOUND);
@@ -34,8 +34,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = { HandlerBadRequestException.class })
     protected ResponseEntity<Object> handleApiRequestException(HandlerBadRequestException e) {
         ApiException apiException = new ApiException();
-        apiException.setError(e.getMessage());
-        apiException.setHttpStatus(HttpStatus.BAD_REQUEST.toString());
+        apiException.setStatusMessage(e.getMessage());
+        apiException.setStatusCode(HttpStatus.BAD_REQUEST.toString());
         apiException.setZoneDateTime(ZonedDateTime.now(ZoneId.of("Z")).toString());
 
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
@@ -44,8 +44,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = { HandlerInternalServerErrorException.class })
     protected ResponseEntity<Object> handleApiRequestException(HandlerInternalServerErrorException e) {
         ApiException apiException = new ApiException();
-        apiException.setError(e.getMessage());
-        apiException.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString());
+        apiException.setStatusMessage(e.getMessage());
+        apiException.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
         apiException.setZoneDateTime(ZonedDateTime.now(ZoneId.of("Z")).toString());
 
         return new ResponseEntity<>(apiException, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,8 +54,8 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = { HandlerAuthorizationException.class })
     protected ResponseEntity<Object> handleApiRequestException(HandlerAuthorizationException e) {
         ApiException apiException = new ApiException();
-        apiException.setError(e.getMessage());
-        apiException.setHttpStatus(HttpStatus.UNAUTHORIZED.toString());
+        apiException.setStatusMessage(e.getMessage());
+        apiException.setStatusCode(HttpStatus.UNAUTHORIZED.toString());
         apiException.setZoneDateTime(ZonedDateTime.now(ZoneId.of("Z")).toString());
 
         return new ResponseEntity<>(apiException, HttpStatus.UNAUTHORIZED);

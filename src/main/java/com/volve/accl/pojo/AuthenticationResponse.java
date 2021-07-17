@@ -1,4 +1,4 @@
-package com.volve.accl.domain;
+package com.volve.accl.pojo;
 
 public class AuthenticationResponse {
 	

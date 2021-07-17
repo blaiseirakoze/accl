@@ -1,4 +1,4 @@
-package com.volve.accl.domain;
+package com.volve.accl.pojo;
 
 public class AuthenticationRequest {
 	
@@ -24,6 +24,11 @@ public class AuthenticationRequest {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "AuthenticationRequest [username=" + username + ", password=" + password + "]";
 	}
 
 }

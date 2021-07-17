@@ -1,27 +1,27 @@
 package com.volve.accl.exception;
 
 public class ApiException {
-    private String error;
-    private String HttpStatus;
+	private String statusCode;
+    private String statusMessage;
     private String ZoneDateTime;
 
-    public String getError() {
-		return error;
+	public String getStatusMessage() {
+		return statusMessage;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
 	}
 
-	public String getHttpStatus() {
-        return HttpStatus;
-    }
+	public String getStatusCode() {
+		return statusCode;
+	}
 
-    public void setHttpStatus(String httpStatus) {
-        HttpStatus = httpStatus;
-    }
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
 
-    public String getZoneDateTime() {
+	public String getZoneDateTime() {
         return ZoneDateTime;
     }
 

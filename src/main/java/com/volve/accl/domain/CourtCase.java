@@ -13,21 +13,21 @@ public class CourtCase {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	private String caseDescription;
-	private boolean accepted = false;
+	private String status; //open, accept, deny, close
 	private boolean won = false;
 	private String caseSummary;
-	private String clientId;
-	private String attorneyId;
+	private String document;
 	private boolean deleted = false;
-	private Date createOn;
+	private Date createOn = new Date();
+	private Date updatedOn= new Date();
 	
 	@ManyToOne
     @JoinColumn(name = "client")
-    private Client client;
+    private Users client;
 	
 	@ManyToOne
     @JoinColumn(name = "attorney")
-    private Attorney attorney;
+    private Users attorney;
 
 	public String getId() {
 		return id;
@@ -43,14 +43,6 @@ public class CourtCase {
 
 	public void setCaseDescription(String caseDescription) {
 		this.caseDescription = caseDescription;
-	}
-
-	public boolean isAccepted() {
-		return accepted;
-	}
-
-	public void setAccepted(boolean accepted) {
-		this.accepted = accepted;
 	}
 
 	public boolean isWon() {
@@ -69,22 +61,6 @@ public class CourtCase {
 		this.caseSummary = caseSummary;
 	}
 
-	public String getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(String clientId) {
-		this.clientId = clientId;
-	}
-
-	public String getAttorneyId() {
-		return attorneyId;
-	}
-
-	public void setAttorneyId(String attorneyId) {
-		this.attorneyId = attorneyId;
-	}
-
 	public boolean isDeleted() {
 		return deleted;
 	}
@@ -101,29 +77,51 @@ public class CourtCase {
 		this.createOn = createOn;
 	}
 
-	public Client getClient() {
+	public Users getClient() {
 		return client;
 	}
 
-	public void setClient(Client client) {
+	public void setClient(Users client) {
 		this.client = client;
 	}
 
-	public Attorney getAttorney() {
+	public Users getAttorney() {
 		return attorney;
 	}
 
-	public void setAttorney(Attorney attorney) {
+	public void setAttorney(Users attorney) {
 		this.attorney = attorney;
+	}
+
+	public String getDocument() {
+		return document;
+	}
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
+
+	public Date getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
-		return "CourtCase [id=" + id + ", caseDescription=" + caseDescription + ", accepted=" + accepted + ", won="
-				+ won + ", caseSummary=" + caseSummary + ", clientId=" + clientId + ", attorneyId=" + attorneyId
-				+ ", deleted=" + deleted + ", createOn=" + createOn + ", client=" + client + ", attorney=" + attorney
-				+ "]";
+		return "CourtCase [id=" + id + ", caseDescription=" + caseDescription + ", status=" + status + ", won=" + won
+				+ ", caseSummary=" + caseSummary + ", document=" + document + ", deleted=" + deleted + ", createOn="
+				+ createOn + ", updatedOn=" + updatedOn + ", client=" + client + ", attorney=" + attorney + "]";
 	}
-	
-	
+
 }
