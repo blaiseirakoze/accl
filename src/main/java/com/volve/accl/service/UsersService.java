@@ -16,6 +16,8 @@ import com.volve.accl.repository.AttorneyCategoryInterface;
 import com.volve.accl.repository.RoleInterface;
 import com.volve.accl.repository.UsersInterface;
 
+import java.util.List;
+
 @Service
 public class UsersService {
 
@@ -67,9 +69,9 @@ public class UsersService {
 	 * 
 	 * @return
 	 */
-	public GlobalResponse listUsers() {
+	public List<Users> listUsers() {
 		try {
-			return new GlobalResponse(HttpStatus.OK.toString(), "All users", usersInterface.findAll());
+			return usersInterface.findAll();
 		} catch (Exception e) {
 			throw new HandlerInternalServerErrorException("Server error");
 		}
@@ -77,7 +79,7 @@ public class UsersService {
 
 	/**
 	 * 
-	 * @param userId
+	 * @param id
 	 * @return
 	 */
 	public Users approveAttorney(String id) {

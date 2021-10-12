@@ -2,22 +2,23 @@ package com.volve.accl.controller;
 
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.volve.accl.pojo.CourtCaseRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.volve.accl.domain.CourtCase;
 import com.volve.accl.exception.HandlerInternalServerErrorException;
 import com.volve.accl.pojo.GlobalResponse;
 import com.volve.accl.service.CourtCaseService;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class CourtCaseController {
 
 	@Autowired
@@ -25,13 +26,18 @@ public class CourtCaseController {
 
 	/**
 	 * 
-	 * @param courtCase
+	 * @param
 	 * @return
 	 */
-	@RequestMapping(value = "/case", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<?> createCase(@RequestBody CourtCase courtCase) {
+	@RequestMapping(value = "/case", method = RequestMethod.POST, consumes = "multipart/form-data")
+	public ResponseEntity<?> createCase(@RequestParam("caseData") MultipartFile caseData, @RequestParam("caseDocument") MultipartFile caseDocument) {
+		CourtCase courtCase = new Gson().fromJson((JsonElement) caseData,CourtCase.class);
+
+		System.out.println("courtCaseeeeeeeeeeeeeeeeeeeeeeeeee "+ caseDocument);
+		System.out.println("clienttttttttttttttttttttttttttttt "+ courtCase);
 		try {
-			return new ResponseEntity<String>(caseService.createCase(courtCase), HttpStatus.CREATED);
+//			return new ResponseEntity<String>(caseService.createCase(courtCase), HttpStatus.CREATED);
+			return null;
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new HandlerInternalServerErrorException("Server error");

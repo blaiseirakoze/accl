@@ -6,11 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.volve.accl.domain.Users;
 import com.volve.accl.exception.HandlerInternalServerErrorException;
@@ -21,8 +17,11 @@ import com.volve.accl.security.JwtUtil;
 import com.volve.accl.security.MyUserDetailsService;
 import com.volve.accl.service.UsersService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 public class UsersController {
 
 	@Autowired
@@ -64,6 +63,7 @@ public class UsersController {
 
 			return ResponseEntity.ok(new AuthenticationResponse(jwt));
 		} catch (Exception e) {
+			System.out.println("errrorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr "+e);
 			throw new Exception("Invalid credentials", e);
 
 		}
@@ -87,7 +87,7 @@ public class UsersController {
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ResponseEntity<?> listUsers() {
 		try {
-			return new ResponseEntity<GlobalResponse>(usersService.listUsers(), HttpStatus.OK);
+			return new ResponseEntity<List<Users>>(usersService.listUsers(), HttpStatus.OK);
 		} catch (Exception e) {
 			// TODO: handle exception
 			throw new HandlerInternalServerErrorException("Server error");

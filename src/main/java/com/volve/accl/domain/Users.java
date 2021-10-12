@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -41,9 +42,11 @@ public class Users {
     private Role role;
 	
 	@OneToMany(mappedBy = "client")
+	@JsonIgnore
     private List<CourtCase> clientCourtCase;
 	
 	@OneToMany(mappedBy = "attorney")
+	@JsonIgnore
     private List<CourtCase> attorneyCourtCase;
 	
 	@ManyToOne
