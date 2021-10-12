@@ -21,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	private UsersInterface userInterface;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public MyUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		Users user = userInterface.findByUsername(username);
 //                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));

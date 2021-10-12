@@ -5,15 +5,23 @@ import java.util.Date;
 public class CourtCaseRequest {
     private String caseDescription;
     private String client;
-    private String document;
+    private String attorney;
 
     public CourtCaseRequest() {
     }
 
-    public CourtCaseRequest(String caseDescription, String client, String document) {
+    public CourtCaseRequest(String caseDescription, String client, String attorney) {
         this.caseDescription = caseDescription;
         this.client = client;
-        this.document = document;
+        this.attorney = attorney;
+    }
+
+    public String getAttorney() {
+        return attorney;
+    }
+
+    public void setAttorney(String attorney) {
+        this.attorney = attorney;
     }
 
     public String getCaseDescription() {
@@ -32,20 +40,12 @@ public class CourtCaseRequest {
         this.client = client;
     }
 
-    public String getDocument() {
-        return document;
-    }
-
-    public void setDocument(String document) {
-        this.document = document;
-    }
-
     @Override
     public String toString() {
         return "CourtCaseRequest{" +
                 "caseDescription='" + caseDescription + '\'' +
                 ", client='" + client + '\'' +
-                ", document='" + document + '\'' +
+                ", attorney='" + attorney + '\'' +
                 '}';
     }
 }
