@@ -12,6 +12,7 @@ public class MyUserDetails implements UserDetails {
 	private String userName;
 	private String password;
 	private boolean active;
+	private String role;
 	private List<GrantedAuthority> authorities;
 	
 	
@@ -25,6 +26,7 @@ public class MyUserDetails implements UserDetails {
 		this.userName = user.getUsername();
 		this.password = user.getPassword();
 		this.active = user.getActive();
+		this.role = user.getRole().getName();
 		this.authorities = authorities;
 	}
 
@@ -35,6 +37,30 @@ public class MyUserDetails implements UserDetails {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public void setAuthorities(List<GrantedAuthority> authorities) {
+		this.authorities = authorities;
 	}
 
 	@Override

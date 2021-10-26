@@ -1,8 +1,13 @@
 package com.volve.accl.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.volve.accl.domain.Users;
 import com.volve.accl.pojo.CourtCaseRequest;
 import com.volve.accl.repository.UsersInterface;
@@ -15,6 +20,8 @@ import com.volve.accl.exception.HandlerInternalServerErrorException;
 import com.volve.accl.exception.HandlerNotFoundException;
 import com.volve.accl.pojo.GlobalResponse;
 import com.volve.accl.repository.CourtCaseInterface;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CourtCaseService {
@@ -25,22 +32,41 @@ public class CourtCaseService {
     @Autowired
     UsersInterface usersInterface;
 
+    private String basePath = "/home/irakoze/Documents/my-own/accl-project/files/";
 
     /**
-     * @param courtCaseRequest
+     * @param document
+     * @param data
      * @return
      */
-    public String createCase(CourtCaseRequest courtCaseRequest) {
+    public GlobalResponse createCase(MultipartFile document, @RequestParam String data) {
         try {
+            //pass to case data to court case object
+            CourtCaseRequest courtCaseRequest = new Gson().fromJson(data, CourtCaseRequest.class);
+            //check if client exist
             Users foundUser = usersInterface.findById(courtCaseRequest.getClient()).orElse(new Users());
             if (foundUser == null) {
                 throw new HandlerNotFoundException("Client not found");
             }
-            CourtCase courtCase = caseInterface.save(new CourtCase(courtCaseRequest.getCaseDescription(), foundUser));
-            if (courtCase != null) {
-                return "Case successfully created";
+            //check if attorney exist
+            Users foundAttorney = usersInterface.findById(courtCaseRequest.getAttorney()).orElse(new Users());
+            if (foundAttorney == null) {
+                throw new HandlerNotFoundException("Attorney not found");
             }
-            return "Error occurs! please try again";
+            // document name format
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+            String fileName = simpleDateFormat.format(new Date()) + "-" + document.getOriginalFilename().replace(" ", "-");
+            Path path = Paths.get(basePath + fileName);
+            // create case
+            CourtCase courtCaseToSave = new CourtCase(courtCaseRequest.getCaseDescription(), path.toString(), foundUser);
+            courtCaseToSave.setAttorney(foundAttorney);
+            CourtCase courtCase = caseInterface.save(courtCaseToSave);
+            if (courtCase != null) {
+                // move a document to a specific folder
+                Files.write(path, document.getBytes());
+                return new GlobalResponse(HttpStatus.CREATED.toString(), "case successfully created");
+            }
+            throw new HandlerInternalServerErrorException("Server error");
         } catch (Exception e) {
             // TODO: handle exception
             throw new HandlerInternalServerErrorException("Server error");
@@ -62,22 +88,15 @@ public class CourtCaseService {
     /**
      * @param id
      * @param status
-     * @param caseSummary
-     * @param won
      * @return
      */
-    public GlobalResponse updateCaseStatus(String id, String status, String caseSummary, boolean won) {
+    public GlobalResponse updateCaseStatus(String id, String status) {
         try {
             CourtCase founCourtCase = caseInterface.findById(id).orElse(new CourtCase());
             if (founCourtCase == null) {
                 throw new HandlerNotFoundException("Case not found");
             }
-            if (status.equals("close")) {
-                founCourtCase.setCaseSummary(caseSummary);
-                founCourtCase.setWon(won);
-            }
             founCourtCase.setStatus(status);
-            founCourtCase.setUpdatedOn(new Date());
             caseInterface.save(founCourtCase);
             return new GlobalResponse(HttpStatus.CREATED.toString(), "Status changed");
         } catch (Exception e) {

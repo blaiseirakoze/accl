@@ -14,16 +14,24 @@ public class GlobalResponse {
 	private String zoneDateTime = ZonedDateTime.now(ZoneId.of("Z")).toString();
 	private Object data;
 
+	public GlobalResponse() {
+	}
+
 	public GlobalResponse(String statusCode, String statusMessage) {
-		super();
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;
 	}
 
 	public GlobalResponse(String statusCode, String statusMessage, Object data) {
-		super();
 		this.statusCode = statusCode;
 		this.statusMessage = statusMessage;
+		this.data = data;
+	}
+
+	public GlobalResponse(String statusCode, String statusMessage, String zoneDateTime, Object data) {
+		this.statusCode = statusCode;
+		this.statusMessage = statusMessage;
+		this.zoneDateTime = zoneDateTime;
 		this.data = data;
 	}
 
@@ -38,6 +46,7 @@ public class GlobalResponse {
 	public String getStatusCode() {
 		return statusCode;
 	}
+
 	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
 	}

@@ -1,5 +1,6 @@
 package com.volve.accl.controller;
 
+import com.volve.accl.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,11 +58,12 @@ public class UsersController {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
 					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-			UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+			MyUserDetails myUserDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+			UserDetails userDetails = myUserDetails;
 
 			final String jwt = jwtUtil.generateToken(userDetails);
 
-			return ResponseEntity.ok(new AuthenticationResponse(jwt));
+			return ResponseEntity.ok(new AuthenticationResponse(jwt, myUserDetails.getRole()));
 		} catch (Exception e) {
 			System.out.println("errrorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr "+e);
 			throw new Exception("Invalid credentials", e);

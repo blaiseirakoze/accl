@@ -18,6 +18,11 @@ public class CourtCase {
 	private Date createOn;
 	private Date updatedOn;
 
+	@PreUpdate
+	public void prepareUpdate(){
+		this.updatedOn = new Date();
+	}
+
 	public CourtCase() {
 	}
 

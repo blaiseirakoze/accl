@@ -55,7 +55,7 @@ public class UsersService {
 				throw new HandlerNotFoundException("Attorney category not Found");
 			}
 			user.setAttorneyCategory(foundAttorneyCategory);
-			user.setActive(false);
+//			user.setActive(true);
 		}
 
 //		save user
